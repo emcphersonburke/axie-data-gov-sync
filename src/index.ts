@@ -2,11 +2,11 @@ import Web3 from "web3";
 import dotenv from "dotenv";
 import fs from "fs";
 
-// Check if .env.local exists and load it, otherwise load .env
+// Check if .env.local exists and load it, otherwise load .env from the parent directory
 if (fs.existsSync(".env.local")) {
   dotenv.config({ path: ".env.local" });
 } else {
-  dotenv.config();
+  dotenv.config({ path: "../.env" });
 }
 
 import {
