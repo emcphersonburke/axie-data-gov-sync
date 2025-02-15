@@ -110,15 +110,13 @@ async function fetchTransactions() {
   try {
     let fromBlockStr;
     let toBlockStr;
-
     // 1. Determine block range
     const lastBlockStr = await getMetaValue("last_processed_block");
-    let fromBlockFallback = process.env.RONIN_GATEWAY_FIRST_REAL_TX_BLOCK ||
-      "0";
-    const fromBlockEffective = lastBlockStr ? lastBlockStr : fromBlockFallback;
-    if (!fromBlockStr) {
-      fromBlockStr = fromBlockEffective;
+    if (!lastBlockStr) {
+      console.error("Error: Failed to retrieve last processed block.");
+      return;
     }
+    fromBlockStr = lastBlockStr;
     if (!toBlockStr) {
       const blockInterval = 3;
       toBlockStr = (parseInt(fromBlockStr, 10) + blockInterval).toString();
